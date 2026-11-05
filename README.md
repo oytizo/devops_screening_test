@@ -22,6 +22,27 @@ Expected Output payload:
 
 ---
 
+## System Architecture & Workflow
+
+```mermaid
+graph TD
+    A[Local Host / Developer] -->|Code Commit & Push| B(GitHub Main Branch)
+    B -->|Triggers Pipeline| C{GitHub Actions CI}
+    C -->|1. Run Linters| C1[Code Validation]
+    C -->|2. Build Image| C2[Docker Build]
+    C2 -->|3. Authenticate & Push| D[Docker Hub Registry]
+    D -->|Pull Latest Image| E[Target VPS / AWS EC2]
+    E -->|Deploy Container| F[Live Application Port 8080]
+
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#bfb,stroke:#333,stroke-width:2px
+```
+
+---
+
+---
+
 ## System Health Script Setup
 
 The automated health script checks fundamental OS tracking telemetry and generates metrics alerts.
